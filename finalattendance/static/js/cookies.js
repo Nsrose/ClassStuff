@@ -23,7 +23,6 @@ function getCookie(cname) {
 function checkCookie(data) {
     var voteCookie = getCookie("user_data");
     if (voteCookie != "") {
-        alert("You already voted, thanks!");
         return true;
     } else {
         setCookie("user_data", data, 1);

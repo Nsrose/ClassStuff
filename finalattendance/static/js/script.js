@@ -1,6 +1,8 @@
 // Firebase url string
 var FIREBASE_STRING = "https://finalattendance.firebaseio.com/";
 
+// If true, then check for cookies
+var checkCookies = false;
 
 // Custom alert box
 function message(m) {
@@ -60,17 +62,26 @@ $(document).ready(function() {
     $("#submit").click(function() {
         var name = $("#name_input").val();
         var login = $("#login_input").val();
-        if (inputsOkay(name, login)) {
-            fireRef.once('value', function(snapshot) {
-                if (snapshot.hasChild(login)) {
-                    message("We already got this login's attendance.");
-                    
-                } else {
-                    verify(login, name);
-                }
-            });
+        if (!checkCookies || !checkCookie(login)) {
+            if (inputsOkay(name, login)) {
+                fireRef.once('value', function(snapshot) {
+                    if (snapshot.hasChild(login)) {
+                        message("We already got this login's attendance.");
+                         window.setTimeout(function() {
+                            closeMessage();    
+                        }, 1000)
+                    } else {
+                        verify(login, name);
+                    }
+                });
+            } else {
+                message("Name or login is bad.");
+                window.setTimeout(function() {
+                    closeMessage();    
+                }, 1000)
+            }
         } else {
-            message("Name or login is bad.");
+            message("You've already recorded your attendance.");
             window.setTimeout(function() {
                 closeMessage();    
             }, 1000)
