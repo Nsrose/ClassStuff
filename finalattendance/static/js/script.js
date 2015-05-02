@@ -2,7 +2,7 @@
 var FIREBASE_STRING = "https://finalattendance.firebaseio.com/";
 
 // If true, then check for cookies
-var checkCookies = false;
+var checkCookies = true;
 
 // Custom alert box
 function message(m) {
@@ -62,50 +62,52 @@ $(document).ready(function() {
     $("#submit").click(function() {
         var name = $("#name_input").val();
         var login = $("#login_input").val();
-        if (!checkCookies || !checkCookie(login)) {
-            if (inputsOkay(name, login)) {
-                fireRef.once('value', function(snapshot) {
-                    if (snapshot.hasChild(login)) {
-                        message("We already got this login's attendance.");
-                         window.setTimeout(function() {
-                            closeMessage();    
-                        }, 1000)
-                    } else {
-                        verify(login, name);
-                    }
-                });
-            } else {
-                message("Name or login is bad.");
-                window.setTimeout(function() {
-                    closeMessage();    
-                }, 1000)
-            }
+        if (inputsOkay(name, login)) {
+            fireRef.once('value', function(snapshot) {
+                if (snapshot.hasChild(login)) {
+                    message("We already got this login's attendance.");
+                     window.setTimeout(function() {
+                        closeMessage();    
+                    }, 1500)
+                } else {
+                    verify(login, name);
+                }
+            });
         } else {
-            message("You've already recorded your attendance.");
+            message("Name or login is bad.");
             window.setTimeout(function() {
                 closeMessage();    
-            }, 1000)
+            }, 1500)
         }
+       
         
     })
 
     // Verifies that user wants to send data and sends if good.
     function verify(login, name) {
-        message("Are you sure you want to record attendance? You can only do this once.");
-        showYesNo(login, name);
-        $("#yes").click(function() {
-            closeMessage();
-            fireRef.child(login).set(name);
-            window.setTimeout(function() {
-                message("Thanks for recording your attendance!");
+        if (!checkCookies || !checkCookie(login)) {
+            message("Are you sure you want to record attendance? You can only do this once.");
+            showYesNo(login, name);
+            $("#yes").click(function() {
+                closeMessage();
+                fireRef.child(login).set(name);
                 window.setTimeout(function() {
-                    closeMessage();
-                }, 3000)
-            }, 1000)
-        })
-        $("#no").click(function() {
-            closeMessage();
-        })
+                    message("Thanks for recording your attendance!");
+                    window.setTimeout(function() {
+                        closeMessage();
+                    }, 3000)
+                }, 1500)
+            })
+            $("#no").click(function() {
+                closeMessage();
+            })
+        } else {
+            message("You already recorded your attendance.");
+            window.setTimeout(function() {
+                closeMessage();
+            }, 1500)   
+        }
+        
     }
 
 
