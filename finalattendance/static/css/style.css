@@ -1,0 +1,28 @@
+html {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+
+a {
+    text-decoration: none;
+    -webkit-transition:0.25s;
+    transition:0.25s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.img-scaled {
+    width: 100%;
+    display: block;
+}
+.img-scaled-wh {
+    width:100%;
+    height:100%;
+    display:block;
+}
