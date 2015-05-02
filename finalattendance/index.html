@@ -1,8 +1,9 @@
 <html>
     <head>
         <title>Final Attendance</title>
-        <link href="http://fonts.googleapis.com/css?family=Raleway:200,300,400" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="stylesheet" href="static/css/animate.min.css">
         <script src="static/js/firebase.js"></script>
         <script src="/static/js/jquery-1.9.1.js"></script>
         <script src="/static/js/script.js"></script>
@@ -11,24 +12,30 @@
         <div id="overlay"></div>
         <div id="message_container">
             <div id="message_box">
-                <div id="message_text">Are you sure you want to record attendance? You can only do this once.</div>
+                <div id="message_text"></div>
+                <div id="info_container">
+                    <div class="info_item" id="name"></div>
+                    <div class="info_item" id="login"></div>
+                </div>
                 <div id="yesno_container">
-                    <div id="yes">Yes</div>
-                    <div id="no">No</div>
+                    <div class="yesno_item" id="yes">Yes</div>
+                    <div class="yesno_item" id="no">No</div>
                 </div>
             </div>
         </div>
-        <div id="form_container">
-            <div id="form_title">Enter your login and name.
-            </div>
-            <form id="form_input_name">
-                <input type="text" placeholder="Josh Hug" id="name_input">
-            </form>
-            <form id="form_input_login">
-                <input type="text" placeholder="cs61b-aaa" id="login_input">
-            </form>
-            <div id="submit_container">
-                <div id="submit">Submit</div>
+        <div id="form_container" class="animated rollIn">
+            <div id="form_content">
+                <div id="form_title">Enter your name and login:
+                </div>
+                <form id="form_input_name">
+                    <input type="text" placeholder="Josh Hug" id="name_input">
+                </form>
+                <form id="form_input_login">
+                    <input type="text" placeholder="cs61b-aaa" id="login_input">
+                </form>
+                <div id="submit_container">
+                    <div id="submit">Submit</div>
+                </div>
             </div>
         </div>
     </body>
