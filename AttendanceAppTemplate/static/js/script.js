@@ -1,12 +1,17 @@
 // Firebase url string
-var FIREBASE_STRING = "";
+var FIREBASE_STRING = "https://finalattendance.firebaseio.com/";
 
 // Location coords
 var latitude = 0.0;
 var longitude = 0.0;
 
+// DO NOT CHANGE ANTHING ABOVE THIS LINE
+
 // If true, then check for cookies
 var checkCookies = true;
+
+// Allowed distance for recording attendance
+var ALLOWED_RADIUS = 0.050;
 
 // Custom alert box
 function message(m) {
@@ -17,6 +22,7 @@ function message(m) {
 
 // Close message box
 function closeMessage() {
+    $("#location_text").hide();
     $("#message_container").fadeOut(400);
     $("#overlay").fadeOut(400);
     hideYesNo();
@@ -44,9 +50,33 @@ function inputsOkay(name, login) {
     return true;
 }
 
+// Converts numeric degrees to radians, from stackoverflow
+if (typeof(Number.prototype.toRad) === "undefined") {
+  Number.prototype.toRad = function() {
+    return this * Math.PI / 180;
+  }
+}
+
+// Distance between two coords, from stackoverflow, in km
+function distance(lon1, lat1, lon2, lat2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = (lat2-lat1).toRad();
+  var dLon = (lon2-lon1).toRad(); 
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c;
+  return d;
+}
+
 $(document).ready(function() {
     // Create a connection to firebase:
     var fireRef = new Firebase(FIREBASE_STRING);
+
+    // name and login
+    var name = "";
+    var login = "";
 
     // Do submit upon pressing enter
     $('#login_input').keypress(function (e) {
@@ -64,8 +94,8 @@ $(document).ready(function() {
 
     // Form submit actions
     $("#submit").click(function() {
-        var name = $("#name_input").val();
-        var login = $("#login_input").val();
+        name = $("#name_input").val();
+        login = $("#login_input").val();
         if (inputsOkay(name, login)) {
             fireRef.once('value', function(snapshot) {
                 if (snapshot.hasChild(login)) {
@@ -90,21 +120,9 @@ $(document).ready(function() {
     // Verifies that user wants to send data and sends if good.
     function verify(login, name) {
         if (!checkCookies || !checkCookie(login)) {
-            message("Are you sure you want to record attendance? You can only do this once.");
-            showYesNo(login, name);
-            $("#yes").click(function() {
-                closeMessage();
-                fireRef.child(login).set(name);
-                window.setTimeout(function() {
-                    message("Thanks for recording your attendance!");
-                    window.setTimeout(function() {
-                        closeMessage();
-                    }, 3000)
-                }, 1500)
-            })
-            $("#no").click(function() {
-                closeMessage();
-            })
+            $("#overlay").show();
+            $("#location_text").show();
+            navigator.geolocation.getCurrentPosition(checkLocation);
         } else {
             message("You already recorded your attendance.");
             window.setTimeout(function() {
@@ -112,6 +130,42 @@ $(document).ready(function() {
             }, 1500)   
         }
         
+    }
+
+    // Checks radius and sends if okay
+    function checkLocation(location) {
+        if (navigator.geolocation) {
+            var user_lat = location.coords.latitude;
+            var user_lon = location.coords.longitude;
+            var dist = distance(longitude, latitude, user_lon, user_lat);
+            if (dist > ALLOWED_RADIUS) {
+                message("You aren't actually in lecture.");
+                window.setTimeout(function() {
+                    closeMessage();
+                }, 1500)
+            } else {
+                message("Are you sure you want to record attendance? You can only do this once.");
+                showYesNo(login, name);
+                $("#yes").click(function() {
+                    closeMessage();
+                    fireRef.child(login).set(name);
+                    window.setTimeout(function() {
+                        message("Thanks for recording your attendance!");
+                        window.setTimeout(function() {
+                            closeMessage();
+                        }, 3000)
+                    }, 1500)
+                })
+                $("#no").click(function() {
+                    closeMessage();
+                })
+            }
+        } else {
+            message("Location services not working");
+            window.setTimeout(function() {
+                closeMessage();
+            }, 1500)
+        }
     }
 
 

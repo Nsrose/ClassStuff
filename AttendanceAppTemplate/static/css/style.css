@@ -127,3 +127,13 @@ div#form_content {
     width: 100%;
     top: 80;
 }
+#location_text {
+    position: absolute;
+    font-size: 18;
+    color: white;
+    top: 40;
+    text-align: center;
+    width: 100%;
+    z-index: 100;
+    display: none;
+}
