@@ -20,10 +20,10 @@ You'll also need a Firebase server to collect the student's data:
 
 Steps:
 =======
-1) git clone https://github.com/Nsrose/ClassStuff/attendance.git
+1) You need everything in this folder (/attendance/). Copy everything or just git clone the whole repo.  
 2) Go to https://appengine.google.com/, sign in with your Google account.  
 3) Click "Create Application"  
 4) Choose a unique app identifier, and copy it. Your students will see this.     
 5) Choose an app name, like FinalAttendance, leave "Open to all Google Account users" checked.    
 6) Click "create application"  
-7) 
+7) cd ClassStuff/attendance/ # or wherever you put the attendance/ folder
