@@ -11,6 +11,8 @@ https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Python
   
 Download the Python SDK for your OS.   
 
+Firebase
+--------
 You'll also need a Firebase server to collect the student's data:  
 1) Go to https://www.firebase.com/  
 2) Sign in if you already have an account, otherwise sign up.  
@@ -18,12 +20,16 @@ You'll also need a Firebase server to collect the student's data:
 4) Click "Create New App" and click on the app name after creation to go to the Firebase server page.  
 
 
-Steps:
-=======
+Setup Steps:
+============
 1) You need everything in this folder (/attendance/). Copy everything or just git clone the whole repo.  
 2) Go to https://appengine.google.com/, sign in with your Google account.  
 3) Click "Create Application"  
 4) Choose a unique app identifier, and copy it. Your students will see this.     
 5) Choose an app name, like FinalAttendance, leave "Open to all Google Account users" checked.    
 6) Click "create application"  
-7) cd ClassStuff/attendance/ # or wherever you put the attendance/ folder
+7) Follow these commands:  
+$ cd ClassStuff/attendance/ # or wherever you put the attendance/ folder  
+$ source make_attendance.sh <app_name> <app_id> # Use them from steps 4 and 5
+8) Follow the onscreen commands. The first command will ask for the url of your Firebase server. This can be found from URL on the page in step 4 of the "Firebase" section above.  
+9) Google app engine will ask you to login with your account. At this point, the attendance web app should be deployed and can be found at http://<app_id>.appspot.com
