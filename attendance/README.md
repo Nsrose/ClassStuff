@@ -30,6 +30,6 @@ Setup Steps:
 6) Click "create application"  
 7) Follow these commands:  
 $ cd ClassStuff/attendance/ # or wherever you put the attendance/ folder  
-$ source make_attendance.sh <app_name> <app_id> # Use them from steps 4 and 5  
+$ source make_attendance.sh (app_name) (app_id) # Use them from steps 4 and 5  
 8) Follow the onscreen commands. The first command will ask for the url of your Firebase server. This can be found from URL on the page in step 4 of the "Firebase" section above.  
-9) Google app engine will ask you to login with your account. At this point, the attendance web app should be deployed and can be found at http://<app_id>.appspot.com  
+9) Google app engine will ask you to login with your account. At this point, the attendance web app should be deployed and can be found at http://(app_id).appspot.com  
