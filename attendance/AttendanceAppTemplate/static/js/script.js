@@ -2,8 +2,8 @@
 var FIREBASE_STRING = "https://finalattendance.firebaseio.com/";
 
 // Location coords
-var latitude = 0.0;
-var longitude = 0.0;
+var latitude = 0;
+var longitude = 0;
 
 // DO NOT CHANGE ANTHING ABOVE THIS LINE
 

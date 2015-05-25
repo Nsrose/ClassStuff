@@ -1,5 +1,5 @@
 // Firebase url string
-var FIREBASE_STRING = "";
+var FIREBASE_STRING = "https://finalattendance.firebaseio.com/";
 
 // Location coords
 var latitude = 0.0;
@@ -8,10 +8,10 @@ var longitude = 0.0;
 // DO NOT CHANGE ANTHING ABOVE THIS LINE
 
 // If true, then check for cookies
-var checkCookies = true;
+var checkCookies = false;
 
 // Allowed distance for recording attendance
-var ALLOWED_RADIUS = 0.050;
+var ALLOWED_RADIUS = 10000000000;
 
 // Custom alert box
 function message(m) {
@@ -130,7 +130,7 @@ $(document).ready(function() {
     }
 
     // Checks radius and sends if okay
-    function checkLocation() {
+    function checkLocation(location) {
         var user_lat = location.coords.latitude;
         var user_lon = location.coords.longitude;
         var dist = distance(longitude, latitude, user_lon, user_lat);

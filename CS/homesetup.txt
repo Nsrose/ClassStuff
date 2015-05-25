@@ -1,0 +1,25 @@
+ A. $ cp ~/.ssh/id_rsa ~/.ssh/id_rsa_cs61b
+
+ B. Copy your private key from the instructional machines with:
+      $ rsync -a LOGIN@torus.cs.berkeley.edu:.ssh/id_rsa ~/.ssh/id_rsa_cs61b
+      replacing LOGIN with your login.
+
+ C. Create the file .ssh/config (if you don't already have one) and add the
+    line (touch ~/.ssh/confg)
+
+    IdentityFile ~/.ssh/id_rsa_cs61b
+
+ D. If you'd like to be able to use .ssh to log into your 
+    instructional account from your home computer without the bother of
+    a passphrase, you can so by executing the following command on the
+    instructional server (NOT your home machine):
+
+    $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+    (Yes, that is ">>", meaning "append", not ">", which would 
+    mean "overwrite").  At this point, you should be able to log into 
+    your instructional account from home with
+
+       $  ssh LOGIN@torus.cs.berkeley.edu
+
+    (or some other server or workstation).
